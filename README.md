@@ -14,17 +14,15 @@
 ### CSV
 - １行目は、見出し行として扱われます
   - 列は、`name`, `comment` となります
-- 文字コードは、UTF-8 となります
+- 文字コードは、shift-JIS となります
+  - InDesignが扱える文字コードです
 - 改行コードは、LF となります
 
-#### 例
-```csv
-name,comment
-湯婆婆,"フン。千尋というのかい？"
-千尋,"はい。"
-湯婆婆,"贅沢な名だねぇ。今からおまえの名前は千だ。いいかい、千だよ。分かったら返事をするんだ、千！！"
-千,"は、はいっ！"
-```
+## サンプル
+### 入力するドキュメント
+
+### 出力するCSV
+- [001_sample.csv](./samples/output/001_sample.csv)
 
 ## 使い方
 1. Google Docsでスクリプトをコピーします
@@ -39,6 +37,15 @@ name,comment
 
 ### セットアップ
 ```bash
+```
+
+### note
+- shift-JISで出力するため、文字化けが発生する可能性があります
+- その場合は、CSVファイルを開いて、文字コードをshift-JISに変換してください
+```bash
+# https://web-generalist.com/mac_shiftjis_form_utf8/
+
+iconv -f UTF-8 -t SHIFT-JIS [ファイル名] > [出力ファイル名]
 ```
 
 
