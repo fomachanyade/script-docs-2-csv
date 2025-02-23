@@ -1,4 +1,5 @@
-import XLSX from 'xlsx';
+import fs  = require('fs');
+import XLSX  = require('xlsx');
 
 type CreateExcelFileArg = {
     csvContent: string;
@@ -6,7 +7,7 @@ type CreateExcelFileArg = {
     xlsxFolderPath: string;
 }
 
-type CreateExcelFileReturn = {
+export type CreateExcelFileReturn = {
     xlsxPath: string;
 }
 
@@ -16,6 +17,12 @@ export const createExcelFile = (arg: CreateExcelFileArg): CreateExcelFileReturn 
     const { csvContent, fileName, xlsxFolderPath } = arg;
 
     const filePath = `${xlsxFolderPath}/${fileName}.xlsx`;
+
+    // ディレクトリが存在するかチェックし、なければ作成する
+    if (!fs.existsSync(xlsxFolderPath)) {
+        fs.mkdirSync(xlsxFolderPath, { recursive: true });
+        console.log(`Directory created at ${xlsxFolderPath}`);
+    }
     try{
         console.log("start creating excel file. name:", fileName);
         const workbook = XLSX.read(csvContent, { type: 'string' });
