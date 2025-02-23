@@ -6,9 +6,8 @@ const fs = require('fs');
 program
   .version('0.1.0')
   .description('My CLI Tool')
-  .option('-n, --name <name>', '挨拶する名前を指定')
-  .action((options) => {
-    const csvContent = fs.readFileSync('./samples/output/001_sample.csv', 'utf8');
+  .action(() => {
+    const csvContent = fs.readFileSync('./samples/output/csv/001_sample.csv', 'utf8');
     const workbook = XLSX.read(csvContent, { type: 'string' });
     workbook.Props = {
         Title: "TEST",
@@ -22,7 +21,7 @@ program
         // Excel 2013相当なら "15.0000", Excel 2016相当なら "16.0000" など
         AppVersion: "15.0000",
     };
-    XLSX.writeFile(workbook, 'output_with_meta.xlsx', { bookType: 'xlsx',  });
+    XLSX.writeFile(workbook, './tmp/output_with_meta.xlsx', { bookType: 'xlsx',  });
   });
 
 program.parse(process.argv);
