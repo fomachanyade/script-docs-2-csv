@@ -1,6 +1,9 @@
+import fs from "node:fs";
 import { beforeAll, describe, expect, it } from "vitest";
-import { createExcelFile, CreateExcelFileReturn } from "./create_excel_file";
-const fs = require("fs");
+import {
+	type CreateExcelFileReturn,
+	createExcelFile,
+} from "./create_excel_file";
 const XLSX = require("xlsx");
 
 describe("createExcelFile", () => {

@@ -1,4 +1,6 @@
+import fs from "node:fs";
 import { describe, expect, it } from "vitest";
+import config from "./config.json";
 import { buildChapterTitle, parseDocsText } from "./parse_docs_text";
 
 const simpleText = `
@@ -80,6 +82,21 @@ describe("parse_docs_test", () => {
         })
     
     });
+
+    it("実際のファイルで出力", ()=>{
+        const currentPath = process.cwd();
+	    const testFilePath = `${currentPath}/tmp/test/parse_docs_text/test_docs.txt`;
+
+        const file = fs.readFileSync(testFilePath, "utf8")
+        const prefix = config.speakers
+        const result = parseDocsText({
+            scriptStartPrefix: prefix,
+            docsText: file
+        })
+
+        console.log(result)
+    
+    })
     
 })
 
