@@ -3,6 +3,8 @@ import { describe, expect, it } from "vitest";
 
 import { buildAoaData } from "./build_aoa_data";
 import config from "./config.json";
+import { convertAoaToCsv } from "./convert_aoa_to_csv";
+import { createExcelFile } from "./create_excel_file";
 import { parseDocsText } from "./parse_docs_text";
 
 const multipleTextPrefix = ["主人公", "敵"];
@@ -65,6 +67,44 @@ describe("parseDocsText -> buildAoaData", () => {
         const {chapterAoaList} = buildAoaData({chapters});
 
         console.log(JSON.stringify(chapterAoaList, null, 2));
+    
+
+    });
+});
+
+describe("全てを結合", () => {
+    it("実際のファイルで実行", () => {
+        const currentPath = process.cwd();
+        const testFilePath = `${currentPath}/tmp/test/parse_docs_text/test_docs.txt`;
+
+        const file = fs.readFileSync(testFilePath, "utf8");
+        const prefix = config.speakers;
+        const {chapters} = parseDocsText({
+            scriptStartPrefix: prefix,
+            docsText: file,
+        });
+
+        const {chapterAoaList} = buildAoaData({chapters});
+
+        const chapterCsvList = chapterAoaList.map((chapterAoa) => {
+            const csvContent = convertAoaToCsv({aoa: chapterAoa.aoa});
+            return {
+                fileName: chapterAoa.title,
+                csvContent,
+            }
+        });
+
+        const xlsxFolderPath = `${currentPath}/tmp/test/integrate_test/all`;
+
+        const result = Promise.all(chapterCsvList.map( (chapterCsv) => {
+            const { xlsxPath } = createExcelFile({
+                csvContent: chapterCsv.csvContent,
+                fileName: chapterCsv.fileName,
+                xlsxFolderPath,
+            });
+            return xlsxPath;
+        }));
+        console.log(JSON.stringify(result, null, 2));
     
 
     });

@@ -1,4 +1,4 @@
-import fs = require("fs");
+import fs = require("node:fs");
 import XLSX = require("xlsx");
 
 type CreateExcelFileArg = {

@@ -2,7 +2,9 @@ import type { Chapter } from "./type";
 
 export const buildChapterTitle = (num: number, line: string) => {
 	const chapterPrefix = (num + 1).toString().padStart(3, "0");
-	return `${chapterPrefix}_${line}`;
+    // 「/」を許容できる別の文字（例: アンダースコア）に置換
+    const safeFilename = line.replace(/\//g, '_');
+	return `${chapterPrefix}_${safeFilename}`;
 };
 
 type ParseDocsTextArgs = {
