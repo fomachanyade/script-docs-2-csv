@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 import { program } from "commander";
-import fs = require("fs");
+import fs = require("node:fs");
 
 import { createExcelFile } from "./create_excel_file";
 

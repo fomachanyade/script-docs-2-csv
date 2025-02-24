@@ -8,8 +8,10 @@
 		"dev": "ts-node-dev --respawn --transpile-only src/index.ts",
 		"format": "npx @biomejs/biome format --write",
 		"test": "vitest",
-    	"test:parse": "npx vitest src/parse_docs_text.test.ts",
-    	"test:aoa": "npx vitest src/build_aoa_data.test.ts"
+		"test:parse": "npx vitest src/parse_docs_text.test.ts",
+		"test:aoa": "npx vitest src/build_aoa_data.test.ts",
+		"test:integrate": "npx vitest src/integrate_test.test.ts"
+
 	},
 	"author": "katakanakun",
 	"license": "MIT",
